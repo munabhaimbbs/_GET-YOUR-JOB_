@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Premium Job Profile</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Poppins", system-ui, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e1b4b);
+    color: #fefce8;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 8px 35px rgba(255, 215, 0, 0.15);
+  }
+  h1, h2 {
+    text-align: center;
+    color: #ffd700;
+    margin-bottom: 16px;
+  }
+  label {
+    display: block;
+    margin-top: 16px;
+    font-weight: 500;
+    color: #ffe699;
+  }
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    border-radius: 8px;
+    background: rgba(30, 30, 30, 0.7);
+    color: #fff;
+    font-size: 15px;
+    appearance: none;
+  }
+  select option {
+    background-color: #1e1b4b;
+    color: #fff;
+  }
+  input::placeholder {
+    color: #ccc;
+  }
+  .hidden { display: none; }
+  button {
+    background: linear-gradient(90deg,#ffd700,#facc15);
+    border: none;
+    border-radius: 8px;
+    color: #1e1b4b;
+    font-weight: 600;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  button:hover { transform: scale(1.05); opacity: 0.95; }
+  .section { margin-top: 30px; }
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .payment-box {
+    background: rgba(255,255,255,0.07);
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,215,0,0.2);
+  }
+  .upi-id {
+    font-weight: 700;
+    font-size: 18px;
+    color: #ffd700;
+  }
+  .trust-info {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,215,0,0.25);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: #ffe699;
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  /* Help Popup */
+  .popup-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .popup {
+    background: #1e1b4b;
+    border: 2px solid #ffd700;
+    border-radius: 15px;
+    padding: 24px;
+    text-align: center;
+    color: #fff;
+    width: 300px;
+    box-shadow: 0 0 20px rgba(255,215,0,0.3);
+  }
+  .popup h3 {
+    color: #ffd700;
+    margin-bottom: 10px;
+  }
+  .popup-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  .popup-buttons a {
+    background: linear-gradient(90deg,#ffd700,#facc15);
+    color: #1e1b4b;
+    font-weight: 600;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+  .popup-buttons a:hover { transform: scale(1.1); }
+  .close-btn {
+    margin-top: 15px;
+    cursor: pointer;
+    color: #ffe699;
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>✨ Get your job ✨</h1>
+    <p style="text-align:center;opacity:0.8;">this site is not free we charge 10k inr , 5k on applying and anther 5k you have to pay when you get your job  </p>
+
+    <!-- TRUST / SUCCESS INFO -->
+    <div class="trust-info">
+      🌟 We have helped <b>1050+ people</b> get their dream jobs!  
+      <br>Most of them got hired within the <b>first month</b> of joining our service.
+    </div>
+
+    <!-- USER INFO -->
+    <div id="infoSection">
+      <label>Full Name</label>
+      <input id="name" type="text" placeholder="e.g. Rahul Sharma" />
+
+      <label>Age</label>
+      <input id="age" type="number" placeholder="e.g. 25" />
+
+      <label>Mobile Number</label>
+      <input id="mobile" type="tel" maxlength="10" placeholder="10-digit mobile" />
+
+      <label>Address</label>
+      <input id="address" type="text" placeholder="City, State, Pincode" />
+
+      <label>Qualification</label>
+      <select id="qualification">
+        <option value="">-- Select Qualification --</option>
+        <option value="below10">Below 10th</option>
+        <option value="10th">10th</option>
+        <option value="12th">12th</option>
+        <option value="degree">Any Degree</option>
+      </select>
+
+      <div id="degreeField" class="hidden">
+        <label>Degree Name</label>
+        <input id="degreeName" type="text" placeholder="e.g. B.Com, B.Sc, BA, anyskill " />
+      </div>
+
+      <div class="actions">
+        <button id="nextBtn">Next → Payment</button>
+      </div>
+    </div>
+
+    <!-- PAYMENT SECTION -->
+    <div id="paymentSection" class="hidden section">
+      <h2>Payment Details</h2>
+      <p>Service Fee: ₹10,000<br>Pay ₹5,000 now and ₹5,000 after getting your job.</p>
+      <div class="payment-box">
+        <div>UPI ID:</div>
+        <div class="upi-id" id="upiText">9546384579-2@ybl</div>
+        <div class="actions">
+          <button id="copyBtn">Copy UPI ID</button>
+          <button id="payBtn">Pay ₹5,000 Now</button>
+        </div>
+      </div>
+      <p style="margin-top:16px;color:#ffe699;text-align:center;">
+        💬 Once payment is done, <b>our team will contact you soon.</b>
+      </p>
+
+      <div class="actions" style="margin-top:24px;">
+        <button id="backBtn">← Back</button>
+        <button id="helpBtn">Help / Contact Me</button>
+        <button id="sendBtn">before payment click hare</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HELP POPUP -->
+  <div class="popup-overlay" id="helpPopup">
+    <div class="popup">
+      <h3>Need Help?</h3>
+      <p>Contact me directly:</p>
+      <p style="font-weight:bold;color:#ffd700;">📞 +91 7858094972</p>
+      <div class="popup-buttons">
+        <a href="tel:+917858094972">Call Me</a>
+        <a href="https://wa.me/917858094972" target="_blank">Message Me</a>
+      </div>
+      <div class="close-btn" id="closePopup">Close</div>
+    </div>
+  </div>
+
+<script>
+  // ---- Hindi Voice ----
+  const synth = window.speechSynthesis;
+  let voices = [];
+  function loadVoices() { voices = synth.getVoices(); }
+  loadVoices();
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = loadVoices;
+  }
+  function speakHindi(text) {
+    if (!text) return;
+    const utter = new SpeechSynthesisUtterance(text);
+    const hiVoice = voices.find(v => v.lang && v.lang.startsWith('hi')) || voices[0];
+    utter.voice = hiVoice;
+    utter.lang = "hi-IN";
+    utter.rate = 0.95;
+    synth.cancel();
+    synth.speak(utter);
+  }
+
+  // ---- Form ----
+  const name = document.getElementById('name');
+  const age = document.getElementById('age');
+  const mobile = document.getElementById('mobile');
+  const address = document.getElementById('address');
+  const qualification = document.getElementById('qualification');
+  const degreeField = document.getElementById('degreeField');
+  const degreeName = document.getElementById('degreeName');
+  const infoSection = document.getElementById('infoSection');
+  const paymentSection = document.getElementById('paymentSection');
+
+  [name, age, mobile, address].forEach(field => {
+    field.addEventListener('focus', () => speakHindi(field.previousElementSibling.innerText + " भरें"));
+  });
+
+  qualification.addEventListener('change', e => {
+    speakHindi("योग्यता चुनी गई");
+    if (e.target.value === "degree") {
+      degreeField.classList.remove('hidden');
+      speakHindi("अपनी डिग्री का नाम दर्ज करें");
+    } else degreeField.classList.add('hidden');
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (!name.value || !mobile.value) {
+      speakHindi("कृपया नाम और मोबाइल नंबर दर्ज करें");
+      alert("Please enter your name and mobile number.");
+      return;
+    }
+    infoSection.classList.add('hidden');
+    paymentSection.classList.remove('hidden');
+    speakHindi("भुगतान खंड खुल गया है");
+  });
+
+  document.getElementById('backBtn').addEventListener('click', () => {
+    paymentSection.classList.add('hidden');
+    infoSection.classList.remove('hidden');
+    speakHindi("पहले वाले पेज पर वापस जाएँ");
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    const upi = document.getElementById('upiText').innerText;
+    navigator.clipboard.writeText(upi).then(() => {
+      speakHindi("यूपीआई आईडी कॉपी कर दी गई है");
+      alert("UPI ID copied!");
+    });
+  });
+
+  document.getElementById('payBtn').addEventListener('click', () => {
+    const upi = document.getElementById('upiText').innerText;
+    const payUrl = `upi://pay?pa=${encodeURIComponent(upi)}&pn=PremiumService&am=5000&cu=INR&tn=First%20Installment`;
+    const info = [
+      `Name: ${name.value}`,
+      `Age: ${age.value}`,
+      `Mobile: ${mobile.value}`,
+      `Address: ${address.value}`,
+      `Qualification: ${qualification.value}` + (qualification.value === "degree" ? ` (${degreeName.value})` : "")
+    ].join("\n");
+    const msg = encodeURIComponent(info + "\nPayment started via UPI.");
+    const whatsapp = `https://wa.me/917858094972?text=${msg}`;
+    window.open(payUrl, "_blank");
+    window.open(whatsapp, "_blank");
+    speakHindi("भुगतान और जानकारी वाट्सएप पर भेजी जा रही है");
+  });
+
+  document.getElementById('sendBtn').addEventListener('click', () => {
+    const info = [
+      `Name: ${name.value}`,
+      `Age: ${age.value}`,
+      `Mobile: ${mobile.value}`,
+      `Address: ${address.value}`,
+      `Qualification: ${qualification.value}` + (qualification.value === "degree" ? ` (${degreeName.value})` : "")
+    ].join("\n");
+    const msg = encodeURIComponent(info);
+    const whatsapp = `https://wa.me/917858094972?text=${msg}`;
+    window.open(whatsapp, "_blank");
+    speakHindi("वाट्सएप पर जानकारी भेजी जा रही है");
+  });
+
+  // ---- Help Popup ----
+  const helpPopup = document.getElementById('helpPopup');
+  document.getElementById('helpBtn').addEventListener('click', () => {
+    helpPopup.style.display = 'flex';
+    speakHindi("सहायता अनुभाग खुल गया है");
+  });
+  document.getElementById('closePopup').addEventListener('click', () => {
+    helpPopup.style.display = 'none';
+  });
+</script>
+</body>
+</html>
